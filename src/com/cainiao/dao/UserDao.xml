@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cainiao.dao.UserDao" >
+    <!-- 查询用户 -->
+    <select id="findUser" parameterType="String" resultType="user">
+	    select *
+	    from user
+	    where user_username = #{username}
+	    and user_password =#{password}
+    </select>
+    <select id="addUser" parameterType="String" resultType="user">
+	  insert into user(user_username,user_password) values (#{username},#{password})
+    </select>
+    <update id="editUser" parameterType="user" >
+	  update user
+	  <set>
+	  	<if test="user_username!=null">
+	  		user_username=#{user_username},
+	  	</if>
+	  	<if test="user_password!=null">
+	  		user_password=#{user_password},
+	  	</if>
+	  </set>
+        WHERE user_id = #{user_id}
+    </update>
+</mapper>

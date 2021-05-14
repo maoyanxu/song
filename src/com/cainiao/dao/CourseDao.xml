@@ -1,0 +1,53 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cainiao.dao.CourseDao">
+
+	  <!-- 查询数据条目 -->
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(*) FROM course
+    </select>
+ 
+    <!-- 增加一条数据 -->
+    <insert id="addCourse" parameterType="Course">
+        INSERT INTO course VALUES(NULL, #{course_id}, #{name},#{teacher})
+    </insert>
+ 
+    <!-- 删除一条数据 -->
+    <delete id="deleteCourse" parameterType="int">
+        DELETE FROM course WHERE id = #{id}
+    </delete>
+ 
+    <!-- 更新一条数据 -->
+    <update id="updateCourse" parameterType="Course">
+        UPDATE course SET course_id = #{course_id}, name = #{name},teacher=#{teacher}
+      WHERE id = #{id}
+    </update>
+ 
+    <!-- 查询一条数据 -->
+    <select id="getCourse" resultMap="course" parameterType="int">
+        SELECT * FROM course WHERE id = #{id}
+    </select>
+    <!-- 查询一条数据 -->
+    <select id="getCourse3" resultMap="course" parameterType="int">
+        SELECT * FROM course WHERE course_id = #{course_id}
+    </select>
+    <!-- 查询一条数据 -->
+    <select id="getCourse1" resultMap="course" parameterType="string">
+        SELECT * FROM course WHERE name = #{name}
+    </select>
+    <!-- 查询一条数据 -->
+    <select id="getCourse2" resultMap="course" parameterType="string">
+        SELECT * FROM course WHERE teacher = #{teacher}
+    </select>
+ 
+    <resultMap id="course" type="course">
+        <id column="id" property="id"/>
+        <result column="course_id" property="course_id"/>
+        <result column="name" property="name"/>
+        <result column="teacher" property="teacher"/>
+    </resultMap>
+ 
+    <!-- 查询从start位置开始的count条数据-->
+    <select id="list" resultMap="course">
+        SELECT * FROM course ORDER BY course_id desc limit #{param1}, #{param2}
+    </select>
+</mapper>

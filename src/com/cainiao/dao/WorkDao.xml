@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cainiao.dao.WorkDao">
+
+	  <!-- 查询数据条目 -->
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(*) FROM work
+    </select>
+ 
+    <!-- 增加一条数据 -->
+    <insert id="addWork" parameterType="Work">
+       INSERT INTO work VALUES(NULL, #{work_id}, #{name}, #{text}, #{date})
+    </insert>
+ 
+    <!-- 删除一条数据 -->
+    <delete id="deleteWork" parameterType="int">
+        DELETE FROM work WHERE id = #{id}
+    </delete>
+ 
+    <!-- 更新一条数据 -->
+    <update id="updateWork" parameterType="Work">
+        UPDATE work SET work_id = #{work_id}, name = #{name},text=#{text},date=#{date}
+      WHERE id = #{id}
+    </update>
+ 
+    <!-- 查询一条数据 -->
+    <select id="getWork" resultMap="work" parameterType="int">
+        SELECT * FROM work WHERE id = #{id}
+    </select>
+    <select id="getWork1" resultMap="work" parameterType="int">
+        SELECT * FROM work WHERE work_id = #{work_id}
+    </select>
+    <select id="getWork2" resultMap="work" parameterType="string">
+        SELECT * FROM work WHERE name = #{name}
+    </select>
+ 
+    <resultMap id="work" type="work">
+        <id column="id" property="id"/>
+        <result column="work_id" property="work_id"/>
+        <result column="name" property="name"/>
+        <result column="text" property="text"/>
+                <result column="date" property="date" javaType="java.sql.Date"/>
+
+    </resultMap>
+ 
+    <!-- 查询从start位置开始的count条数据-->
+    <select id="list" resultMap="work">
+        SELECT * FROM work ORDER BY work_id desc limit #{param1}, #{param2}
+    </select>
+</mapper>

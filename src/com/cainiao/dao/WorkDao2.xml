@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cainiao.dao.WorkDao2">
+
+	  <!-- 查询数据条目 -->
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(*) FROM work2
+    </select>
+ 
+    <!-- 增加一条数据 -->
+    <insert id="addWork" parameterType="Work">
+       INSERT INTO work2 VALUES(NULL,  #{name},#{work_id})
+    </insert>
+ 
+    
+ 
+    <!-- 查询一条数据 -->
+    <select id="getWork" resultMap="work" parameterType="int">
+        SELECT * FROM work2 WHERE id = #{id}
+    </select>
+    
+ 
+    <resultMap id="work" type="work">
+        <id column="id" property="id"/>
+        <result column="work_id" property="work_id"/>
+        <result column="name" property="name"/>
+
+    </resultMap>
+ 
+    <!-- 查询从start位置开始的count条数据-->
+    <select id="list" resultMap="work">
+        SELECT * FROM work2 ORDER BY work_id desc limit #{param1}, #{param2}
+    </select>
+</mapper>
